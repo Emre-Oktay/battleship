@@ -2,7 +2,7 @@ export class Gameboard {
     constructor() {
         this.board = this.createBoard(10, 10);
         this.ships = [];
-        this.missedAttacks = [];
+        this.attacks = [];
     }
 
     createBoard(rows, columns) {
@@ -72,14 +72,29 @@ export class Gameboard {
             return false;
         }
 
+        const alreadyAttacked = this.attacks.some((attack) => attack.row === row && attack.column === column);
+
+        if (alreadyAttacked) {
+            return false;
+        }
+
         if (this.board[row][column] !== null) {
             const ship = this.board[row][column]['ship'];
             ship.hit();
+            this.attacks.push({ row: row, column: column, hitTarget: true });
             return true;
         } else {
-            this.missedAttacks.push({ row, column });
+            this.attacks.push({ row: row, column: column, hitTarget: false });
             return false;
         }
+    }
+
+    get missedAttacks() {
+        return this.attacks
+            .filter((attack) => attack.hitTarget === false)
+            .map((attack) => {
+                return { row: attack.row, column: attack.column };
+            });
     }
 
     allShipsSunk() {
