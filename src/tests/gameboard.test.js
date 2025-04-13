@@ -116,29 +116,29 @@ describe('Gameboard', () => {
 
         test('should return false when not all ships are sunk', () => {
             gameboard.placeShip(ship, 0, 0, true);
-            ship.hit();
+            gameboard.receiveAttack(0, 0);
             expect(gameboard.allShipsSunk()).toBe(false);
         });
 
         test('should return true when all ships are sunk', () => {
             gameboard.placeShip(ship, 0, 0, true);
-            ship.hit();
-            ship.hit();
-            ship.hit();
+            gameboard.receiveAttack(0, 0);
+            gameboard.receiveAttack(0, 1);
+            gameboard.receiveAttack(0, 2);
             expect(gameboard.allShipsSunk()).toBe(true);
         });
 
         test('should return true when multiple ships are all sunk', () => {
             gameboard.placeShip(ship, 0, 0, true);
             const ship2 = new Ship(2);
-            gameboard.placeShip(ship2, 0, 1, true);
+            gameboard.placeShip(ship2, 3, 3, true);
 
-            ship.hit();
-            ship.hit();
-            ship.hit();
+            gameboard.receiveAttack(0, 0);
+            gameboard.receiveAttack(0, 1);
+            gameboard.receiveAttack(0, 2);
 
-            ship2.hit();
-            ship2.hit();
+            gameboard.receiveAttack(3, 3);
+            gameboard.receiveAttack(3, 4);
 
             expect(gameboard.allShipsSunk()).toBe(true);
         });
@@ -146,11 +146,11 @@ describe('Gameboard', () => {
         test('should return false when only some ships are sunk', () => {
             gameboard.placeShip(ship, 0, 0, true);
             const ship2 = new Ship(2);
-            gameboard.placeShip(ship2, 0, 1, true);
+            gameboard.placeShip(ship2, 3, 3, true);
 
-            ship.hit();
-            ship.hit();
-            ship.hit();
+            gameboard.receiveAttack(0, 0);
+            gameboard.receiveAttack(0, 1);
+            gameboard.receiveAttack(0, 2);
 
             expect(gameboard.allShipsSunk()).toBe(false);
         });
