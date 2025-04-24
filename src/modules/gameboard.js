@@ -17,21 +17,19 @@ export class Gameboard {
     }
 
     placeShip(ship, row, column, isHorizontal) {
-        if (!this.isValidPlacement(ship, column, row, isHorizontal)) {
+        if (!this.isValidPlacement(ship, row, column, isHorizontal)) {
             return false;
         }
         if (isHorizontal) {
             for (let i = 0; i < ship.length; i++) {
                 this.board[row][column + i] = {
                     ship: ship,
-                    index: i,
                 };
             }
         } else {
             for (let i = 0; i < ship.length; i++) {
                 this.board[row + i][column] = {
                     ship: ship,
-                    index: i,
                 };
             }
         }

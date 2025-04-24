@@ -44,11 +44,11 @@ describe('Gameboard', () => {
         });
 
         test('should not place ship outside horizontal bounds', () => {
-            expect(gameboard.placeShip(ship, 8, 0, true)).toBe(false);
+            expect(gameboard.placeShip(ship, 0, 8, true)).toBe(false);
         });
 
         test('should not place ship outside vertical bounds', () => {
-            expect(gameboard.placeShip(ship, 0, 8, false)).toBe(false);
+            expect(gameboard.placeShip(ship, 8, 0, false)).toBe(false);
         });
 
         test('should not place ship at negative coordinates', () => {
